@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://nsf0iyr4crac"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_4hv08"]
+[ext_resource type="PackedScene" uid="uid://dodlmonatuwwt" path="res://scenes/inventory.tscn" id="1_coxhp"]
+[ext_resource type="PackedScene" uid="uid://d08mt83v2pih0" path="res://scenes/Item.tscn" id="2_gbw58"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4hv08")
+item_scene = ExtResource("2_gbw58")
+
+[node name="Inventory" parent="." instance=ExtResource("1_coxhp")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 85.0
+offset_top = 85.0
+offset_right = 85.0
+offset_bottom = 85.0
+grow_horizontal = 1
+grow_vertical = 1
+container_height = 5
+container_width = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 597.0
+offset_top = 85.0
+offset_right = 997.0
+offset_bottom = 597.0
+
+[node name="Panel" type="Panel" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Spawn Item"
+
+[connection signal="mouse_entered" from="Inventory" to="." method="_on_inventory_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

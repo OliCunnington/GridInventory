@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://d08mt83v2pih0"]
+
+[ext_resource type="Script" path="res://scripts/item.gd" id="1_uquxq"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Item" type="TextureRect" parent="."]
+mouse_default_cursor_shape = 6
+expand_mode = 1
+script = ExtResource("1_uquxq")
+
+[connection signal="mouse_entered" from="Item" to="Item" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Item" to="Item" method="_on_mouse_exited"]

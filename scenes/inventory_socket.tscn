@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyolr1aqy1bhj"]
+
+[ext_resource type="Texture2D" uid="uid://bl1b50coljgix" path="res://assets/border_box.png" id="1_ab1os"]
+[ext_resource type="Script" path="res://scripts/inventory_socket.gd" id="1_hodfw"]
+
+[node name="InventorySocket" type="TextureRect"]
+custom_minimum_size = Vector2(40, 40)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_ab1os")
+script = ExtResource("1_hodfw")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
