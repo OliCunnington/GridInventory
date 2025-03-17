@@ -19,20 +19,13 @@ func _ready() -> void:
 	data.size.y = randi_range(1,4)
 	self_modulate = data.color
 	
-	
-	#set_size(data.size * 40)
-	#print("Size: " + str(size))
-	#print("data.size: " + str(data.size * 40))
-	
 	size = data.size * 40
-	#print("Size (after direct assignemnt): " + str(size))
-	
 	pivot_offset = size / 2 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if selected:
-		global_position = get_global_mouse_position() #- size/2
+		get_parent().global_position = get_global_mouse_position() #- size/2
 
 
 func _input(event: InputEvent) -> void:
@@ -42,6 +35,7 @@ func _input(event: InputEvent) -> void:
 		emit_signal("item_selected", self)
 	elif selected and event is InputEventMouseButton and event.is_released() and event.button_index == MOUSE_BUTTON_LEFT:
 		selected = false
+		get_parent().global_position = start_pos
 		emit_signal("item_released", self)
 
 

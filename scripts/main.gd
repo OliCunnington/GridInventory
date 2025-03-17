@@ -1,12 +1,5 @@
 extends Control
 
-
-### main demo scene
-### 	inventory scene
-### 	spawn items
-### 	delete items
-
-
 @onready var panel: Panel = $VBoxContainer/Panel
 @onready var inventory: Inventory = $Inventory
 
@@ -37,5 +30,5 @@ func _item_selected(_item):
 
 
 func _item_released(_item):
-	inventory.item_held.position = inventory.item_held.get_child(0).start_pos
+	#inventory.item_held.position = inventory.item_held.get_child(0).start_pos
 	inventory.item_held = null

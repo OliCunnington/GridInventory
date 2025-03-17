@@ -32,22 +32,14 @@ func check_all_available():
 
 
 func _socket_entered(socket):
-	current_index = socket.get_index()
-	socket.self_modulate = "00000000"
 	if item_held:
-		var indexes = get_indexes_from_vector(item_held.get_child(0).data.size)
-		if len(indexes) == item_held.get_child(0).data.size.x * item_held.get_child(0).data.size.y:
-			for i in indexes:
-				get_child(i).self_modulate = Color.GREEN
-		else:
-			for i in indexes:
-				get_child(i).self_modulate = Color.RED
+		current_index = socket.get_index()
+		test_availability()
 
 
 func _socket_exited(socket):
-	current_index = -1
-	for i in get_children():
-		i.self_modulate = "ffffffff"
+	#current_index = -1
+	pass
 
 
 #turns size vector into list of indexes tp check
@@ -65,3 +57,19 @@ func get_indexes_from_vector(vec: Vector2):
 			if test_index < end_of_row and test_index < max_index:
 				indexes.append(test_index)
 	return indexes
+
+
+func test_availability():
+	var indexes = get_indexes_from_vector(item_held.get_child(0).data.size)
+	#test length of indexies against item size
+	if len(indexes) == item_held.get_child(0).data.size.x * item_held.get_child(0).data.size.y:
+		var can_place = true
+		for i in indexes:
+			#check availability of all required sockets
+			can_place = can_place and get_child(i).get_availability()
+		if can_place:
+			for i in indexes:
+				get_child(i).self_modulate = Color.GREEN
+			return
+	for i in indexes:
+		get_child(i).self_modulate = Color.RED
