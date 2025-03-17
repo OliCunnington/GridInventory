@@ -43,5 +43,25 @@ size_flags_vertical = 3
 layout_mode = 2
 text = "Spawn Item"
 
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 484.0
+offset_right = 208.0
+offset_bottom = 524.0
+scale = Vector2(3.48, 2.92)
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "DELETE"
+vertical_alignment = 1
+
 [connection signal="mouse_entered" from="Inventory" to="." method="_on_inventory_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="Panel" to="." method="_on_panel_mouse_entered"]
+[connection signal="mouse_exited" from="Panel" to="." method="_on_panel_mouse_exited"]

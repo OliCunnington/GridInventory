@@ -2,8 +2,7 @@ extends TextureRect
 class_name ItemSocket
 
 
-var item_held : Item
-var grid_ref : int
+var item_held : Node2D
 
 signal socket_entered(socket)
 signal socket_exited(socket)

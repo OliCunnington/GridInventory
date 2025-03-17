@@ -5,6 +5,7 @@ var textures = [preload("res://assets/circ.png"), preload("res://assets/rect.png
 var hovering : bool = false
 var selected : bool = false
 var start_pos : Vector2
+var sockets : Array
 
 @onready var data : ItemData
 
@@ -32,22 +33,23 @@ func _input(event: InputEvent) -> void:
 	if hovering and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and !selected:
 		selected = true
 		start_pos = get_parent().global_position
+		mouse_filter = MOUSE_FILTER_IGNORE
 		emit_signal("item_selected", self)
 	elif selected and event is InputEventMouseButton and event.is_released() and event.button_index == MOUSE_BUTTON_LEFT:
 		selected = false
-		get_parent().global_position = start_pos
+		mouse_filter = MOUSE_FILTER_PASS
 		emit_signal("item_released", self)
 
 
 func _on_mouse_entered() -> void:
 	if !selected:
-		print("Mouse entered")
-		#scale = Vector2(1.25, 1.25)
 		hovering = true
 
 
 func _on_mouse_exited() -> void:
 	if !selected:
-		print("Mouse exited")
-		#scale = Vector2.ONE
 		hovering = false
+
+
+func return_to_original_position():
+	get_parent().global_position = start_pos

@@ -1,11 +1,12 @@
 extends GridContainer
 class_name Inventory
 
-var item_held: Node2D
+var item_held : Node2D
 var current_index : int
+var can_place : bool
 
-@export var container_height: int
-@export var container_width: int
+@export var container_height : int
+@export var container_width : int
 
 @onready var socket_scene : PackedScene = preload("res://scenes/inventory_socket.tscn")
 
@@ -39,7 +40,8 @@ func _socket_entered(socket):
 
 func _socket_exited(socket):
 	#current_index = -1
-	pass
+	for i in get_children():
+		i.self_modulate = "ffffff"
 
 
 #turns size vector into list of indexes tp check
@@ -63,7 +65,7 @@ func test_availability():
 	var indexes = get_indexes_from_vector(item_held.get_child(0).data.size)
 	#test length of indexies against item size
 	if len(indexes) == item_held.get_child(0).data.size.x * item_held.get_child(0).data.size.y:
-		var can_place = true
+		can_place = true
 		for i in indexes:
 			#check availability of all required sockets
 			can_place = can_place and get_child(i).get_availability()
@@ -73,3 +75,19 @@ func test_availability():
 			return
 	for i in indexes:
 		get_child(i).self_modulate = Color.RED
+
+
+func place_item():
+	if can_place:
+		var ind = get_indexes_from_vector(item_held.get_child(0).data.size)
+		#print("setting held item for indexes: " +str(ind))
+		for i in ind:
+			get_child(i).item_held = item_held
+		item_held.reparent(self.get_parent())
+		#print("setting position to: " + str(position + get_child(current_index).position))
+		item_held.position = position + get_child(current_index).position
+		item_held.get_child(0).sockets = ind
+	else:
+		item_held.get_child(0).return_to_original_position()
+	item_held = null
+	can_place = false
