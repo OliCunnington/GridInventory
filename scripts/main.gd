@@ -47,7 +47,6 @@ func _item_released(_item):
 func _on_panel_mouse_entered() -> void:
 	hovering_delete = true
 	delete_panel.self_modulate = "555555"
-	
 
 
 func _on_panel_mouse_exited() -> void:

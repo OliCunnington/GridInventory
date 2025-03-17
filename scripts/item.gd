@@ -21,7 +21,7 @@ func _ready() -> void:
 	self_modulate = data.color
 	
 	size = data.size * 40
-	pivot_offset = size / 2 
+	#pivot_offset = size / 2 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -35,10 +35,13 @@ func _input(event: InputEvent) -> void:
 		start_pos = get_parent().global_position
 		mouse_filter = MOUSE_FILTER_IGNORE
 		emit_signal("item_selected", self)
-	elif selected and event is InputEventMouseButton and event.is_released() and event.button_index == MOUSE_BUTTON_LEFT:
-		selected = false
-		mouse_filter = MOUSE_FILTER_PASS
-		emit_signal("item_released", self)
+	elif selected:
+		if event is InputEventMouseButton and event.is_released() and event.button_index == MOUSE_BUTTON_LEFT:
+			selected = false
+			mouse_filter = MOUSE_FILTER_PASS
+			emit_signal("item_released", self)
+		elif event.is_action_pressed("rotate"):
+			_rotate_item()
 
 
 func _on_mouse_entered() -> void:
@@ -49,6 +52,21 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	if !selected:
 		hovering = false
+
+
+func _rotate_item():
+	data.size = Vector2(data.size.y, data.size.x)
+	rotation_degrees += 90
+	match rotation_degrees:
+		90.0:
+			position = Vector2(size.y, 0)
+		180.0:
+			position = Vector2(size.x, size.y)
+		270.0:
+			position = Vector2(0, size.x)
+		_:
+			rotation_degrees = 0
+			position = Vector2.ZERO
 
 
 func return_to_original_position():
